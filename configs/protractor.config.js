@@ -2,7 +2,7 @@ let SpecReporter = require('jasmine-spec-reporter').SpecReporter;
 
 exports.config = {
   framework: 'jasmine',
-  specs: ['specs/*spec.js'],
+  specs: ['../specs/*spec.js'],
   baseUrl: 'localhost',
   onPrepare: function () {
     jasmine.getEnv().addReporter(new SpecReporter({

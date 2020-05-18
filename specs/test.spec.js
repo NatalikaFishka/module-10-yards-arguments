@@ -1,5 +1,5 @@
-const constants = require('../page_objects/constants/constants');
-const PageFactory = require('../page_objects/pageFactory');
+const constants = require('../utils/constants/constants');
+const PageFactory = require('../utils/page_objects/pageFactory');
 
 describe('Test various UX scenarios of training.by', () => {
 
