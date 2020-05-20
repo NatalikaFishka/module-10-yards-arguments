@@ -2,6 +2,7 @@ const Header = require('./header');
 const Footer = require('./footer');
 const LogInModal = require('./login_modal');
 const EC = protractor.ExpectedConditions;
+const logger = require('../../../configs/logger.config');
 
 class BasePage {
   constructor() {
@@ -10,33 +11,43 @@ class BasePage {
     this.LogInModal = new LogInModal();
   };
 
-  open(url) {
-    return browser.get(url);
+  async open(url) {
+    await browser.get(url);
+    logger.debug(`Go to URL "${url}"`);
   };
 
-  getCurrenUrl() {
-    return browser.getCurrentUrl();
+  async getCurrenUrl() {
+    const currentUrl = await browser.getCurrentUrl();
+    logger.debug(`Current URL is "${currentUrl}"`);
+    return currentUrl;
   };
 
-  getTitle() {
-    return browser.getTitle();
+  async getTitle() {
+    const pageTitle = await browser.getTitle();
+    logger.debug(`Page title is "${pageTitle}"`);
+    return pageTitle;
   };
 
   sleep(waitInMilliseconds) {
+    logger.debug(`Sleeping for "${waitInMilliseconds}" ms`);
     return browser.sleep(waitInMilliseconds);
   };
 
   goBack() {
+    logger.debug(`Navigate back in browser`);
     return browser.navigate().back();
   };
 
   waitForUrl(url) {
+    logger.debug(`Waitong for url: "${url}"`);
     return browser.wait(EC.urlIs(url), 5000);
   };
 
   async scrollToElement(element) {
     const { y } = await element.getLocation();
-    return browser.executeScript('window.scrollTo(0,arguments[0]);', y);
+    await browser.executeScript('window.scrollTo(0,arguments[0]);', y);
+    logger.debug(`Scroll to see desired element`);
+    return;
   };
 
   setSessionStorage(key, value) {
@@ -50,10 +61,6 @@ class BasePage {
   getCookie(key) {
     return browser.manage().getCookie(key);
   };
-
-  openDevConsole() {
-    return browser.actions().sendKeys(protractor.Key.F12).perform();
-  }
 };
 
 module.exports = BasePage;

@@ -1,4 +1,4 @@
-const constants = require('../utils/constants/constants');
+const constants = require('../configs/constants/constants');
 const PageFactory = require('../utils/page_objects/pageFactory');
 
 describe('Test various UX scenarios of training.by', () => {

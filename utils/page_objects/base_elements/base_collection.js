@@ -1,22 +1,30 @@
+const logger = require('../../../configs/logger.config');
+
 class Collection {
   constructor(selector) {
     this.collection = element.all(by.css(selector));
   };
-  getCount() {
-    return this.collection.count();
+  async getCount() {
+    const collectionCount = await this.collection.count();
+    if (collectionCount > 0) logger.debug(`Counted ${collectionCount} element(s)`);
+    return collectionCount;
   };
 
-  getTexts() {
-    return this.collection.getText();
+  async getTexts() {
+    const collectionTexts = await this.collection.getText();
+    logger.debug(`Texts are: ${collectionTexts}`);
+    return collectionTexts;
   };
 
   async clickElementByText(textToClick) {
     const arrayOfElementTexts = await this.collection.getText();
     const elementToClickIndex = arrayOfElementTexts.indexOf(textToClick);
     if (elementToClickIndex === -1) {
+      logger.debug(`No element with [${textToClick}] text found!`);
       throw new Error(`No element with [${textToClick}] text found!`);
     }
-    return this.collection.get(elementToClickIndex).click();
+    await this.collection.get(elementToClickIndex).click();
+    logger.debug(`Element with "${textToClick}" text clicked`);
   };
 
   async getElementByText(innerText) {
@@ -25,7 +33,9 @@ class Collection {
     if (elementIndex === -1) {
       throw new Error(`No element with [${innerText}] text found!`);
     }
-    return this.collection.get(elementIndex);
+    const elementByText = await this.collection.get(elementIndex);
+    logger.debug(`Element by text "${innerText}" found`);
+    return elementByText;
   };
 };
 

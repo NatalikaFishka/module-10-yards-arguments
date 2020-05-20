@@ -8,23 +8,15 @@ exports.config = {
     jasmine.getEnv().addReporter(new SpecReporter({
       displayFailuresSummary: true,
       displayFailuredSpec: true,
-      displaySuiteNumber: true,
+      displaySuiteNumber: false,
       displaySpecDuration: true
     }));
   },
   seleniumAddress: 'http://localhost:4444/wd/hub',
-  multiCapabilities: [
-    {
-      "browserName": "MicrosoftEdge",
-      "ms:edgeOptions": {
-        "w3c": false
-      }
-    },
-    {
-      "browserName": "chrome",
-      "goog:chromeOptions": {
-        "w3c": false
-      }
+  capabilities: {
+    "browserName": "chrome",
+    "goog:chromeOptions": {
+      "w3c": false
     }
-  ],
+  }
 }
