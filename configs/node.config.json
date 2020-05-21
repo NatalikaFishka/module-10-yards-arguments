@@ -3,7 +3,13 @@
     {
       "browserName": "chrome",
       "platform": "WIN10",
-      "maxInstances": 1,
+      "maxInstances": 5,
+      "seleniumProtocol": "WebDriver"
+    },
+    {
+      "browserName": "MicrosoftEdge",
+      "platform": "WIN10",
+      "maxInstances": 5,
       "seleniumProtocol": "WebDriver"
     }
   ],

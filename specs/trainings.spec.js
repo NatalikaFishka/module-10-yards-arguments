@@ -1,7 +1,7 @@
 const constants = require('../configs/constants/constants');
 const PageFactory = require('../utils/page_objects/pageFactory');
 
-describe('Test various UX scenarios of training.by', () => {
+describe('Test various UX scenarios of training.by  SUITE#2 - TRAININGS', () => {
 
   beforeEach(() => {
     browser.ignoreSynchronization = true;

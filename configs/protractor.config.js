@@ -1,8 +1,11 @@
-let SpecReporter = require('jasmine-spec-reporter').SpecReporter;
+const SpecReporter = require('jasmine-spec-reporter').SpecReporter;
+const yargs = require('yargs').argv;
+const testSuitSets = require('./constants/suites_paths');
+const capabilities = require('./constants/browsers_set');
 
 exports.config = {
   framework: 'jasmine',
-  specs: ['../specs/*spec.js'],
+  specs: testSuitSets[yargs.set] || ['../specs/*.spec.js'],
   baseUrl: 'localhost',
   onPrepare: function () {
     jasmine.getEnv().addReporter(new SpecReporter({
@@ -13,10 +16,5 @@ exports.config = {
     }));
   },
   seleniumAddress: 'http://localhost:4444/wd/hub',
-  capabilities: {
-    "browserName": "chrome",
-    "goog:chromeOptions": {
-      "w3c": false
-    }
-  }
+  multiCapabilities: yargs.multi ? capabilities : [capabilities[0]]
 }

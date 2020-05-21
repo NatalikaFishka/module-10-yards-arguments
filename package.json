@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "webdriver-manager update",
     "start.hub": "java -jar configs/webdrivers/selenium-server-standalone-3.141.59.jar -role hub",
-    "start.node": "java -Dwebdriver.chrome.driver=./configs/webdrivers/chromedriver.exe -jar configs/webdrivers/selenium-server-standalone-3.141.59.jar -role node -hub http://localhost:4444/grid/register -nodeConfig configs/node.config.json",
+    "start.node": "java -Dwebdriver.chrome.driver=./configs/webdrivers/chromedriver.exe -Dwebdriver.edge.driver=./configs/webdrivers/msedgedriver.exe -jar configs/webdrivers/selenium-server-standalone-3.141.59.jar -role node -hub http://localhost:4444/grid/register -nodeConfig configs/node.config.json",
     "test": "protractor configs/protractor.config.js"
   },
   "keywords": [
@@ -19,7 +19,8 @@
   "devDependencies": {
     "jasmine-spec-reporter": "^5.0.2",
     "protractor": "^5.4.4",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "yargs": "^15.3.1"
   },
   "dependencies": {
     "server": "^1.0.27"
