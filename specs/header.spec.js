@@ -1,7 +1,7 @@
 const constants = require('../configs/constants/constants');
 const PageFactory = require('../utils/page_objects/pageFactory');
 
-describe('Test various UX scenarios of training.by SUITE#1 - HEADER', () => {
+describe('Test header links navigation', () => {
 
   beforeEach(() => {
     browser.ignoreSynchronization = true;
@@ -44,66 +44,4 @@ describe('Test various UX scenarios of training.by SUITE#1 - HEADER', () => {
     expect(currentURL).toEqual(constants.DEFAULT_TARGET_URL);
   });
 
-  it('Go to Privacy Policy', async () => {
-    await PageFactory.getPage('Home').open();
-    const privacyPolicyElement = await PageFactory.getPage('Home').Footer.navigationButtons.getElementByText(constants.PRIVACY_PILICY_LINK_TEXT_RU);
-    await PageFactory.getPage('Home').scrollToElement(privacyPolicyElement);
-    await PageFactory.getPage('Home').Footer.navigationButtons.clickElementByText(constants.PRIVACY_PILICY_LINK_TEXT_RU);
-    let isUrlMatch = await PageFactory.getPage('Home').waitForUrl(constants.PRIVACY_PILICY_LINK);
-    expect(isUrlMatch).toBeTruthy();
-  });
-
-  it(`Filter trainings by "${constants.FILTER_BY_CITY}" city location`, async () => {
-    await PageFactory.getPage('Home').open();
-    await PageFactory.getPage('Home').Trainings.waitForTrainings();
-    const trainingSection = await PageFactory.getPage('Home').Trainings.trainingSection.getElement()
-    await PageFactory.getPage('Home').scrollToElement(trainingSection);
-
-    const filterToggle = await PageFactory.getPage('Home').Trainings.filterToggle.getElement();
-    await filterToggle.click();
-    await PageFactory.getPage('Home').Trainings.filterSelectionPanel.waitToDisplay();
-
-    await PageFactory.getPage('Home').Trainings.filterCitiesOnPanel.clickElementByText(constants.FILTER_BY_CITY);
-    await filterToggle.click();
-    await PageFactory.getPage('Home').Trainings.filterSelectionPanel.waitToNotDisplay();
-
-    const citiesOnCards = await PageFactory.getPage('Home').Trainings.trainingCardsLocations.getTexts();
-    expect(citiesOnCards.every((curr) => curr.startsWith(constants.FILTER_BY_CITY))).toBeTruthy();
-  });
-
-  it('Clear out filter', async () => {
-    await PageFactory.getPage('Home').open();
-    await PageFactory.getPage('Home').setSessionStorage(constants.FILTER_CITY_KEY, constants.FILTER_BY_CITY_CODE);
-    await PageFactory.getPage('Home').Trainings.waitForTrainings();
-    const filteredTrainingsCard = await PageFactory.getPage('Home').Trainings.trainingCards.getCount();
-    await PageFactory.getPage('Home').Trainings.clearAllFilterButton.click();
-    const trainingsCardsAll = await PageFactory.getPage('Home').Trainings.trainingCards.getCount();
-    expect(() => trainingsCardsAll > filteredTrainingsCard).toBeTruthy();
-  });
-
-  it('Login', async () => {
-    await PageFactory.getPage('Home').open();
-    await PageFactory.getPage('Home').Header.loginButton.click();
-    await PageFactory.getPage('Home').LogInModal.loginForm.waitToDisplay();
-    await PageFactory.getPage('Home').LogInModal.enterEmail(constants.LOGIN);
-    await PageFactory.getPage('Home').LogInModal.enterPassword(constants.PASSWORD);
-    await PageFactory.getPage('Home').LogInModal.clickLogin();
-    await PageFactory.getPage('Home').Header.loggedInUserName.waitToDisplay();
-    const userName = await PageFactory.getPage('Home').Header.loggedInUserName.getText();
-    const { value } = await PageFactory.getPage('Home').getCookie(constants.LOGIN_TOKEN_KEY);
-    constants.LOGIN_TOKEN_VALUE = value;
-    expect(userName).toEqual(constants.USER_NAME);
-  });
-
-  it('Log out', async () => {
-    await PageFactory.getPage('Home').open();
-    await PageFactory.getPage('Home').addCookie(constants.LOGIN_TOKEN_KEY, constants.LOGIN_TOKEN_VALUE);
-    await PageFactory.getPage('Home').addCookie(constants.LOGIN_STATUS_KEY, constants.LOGIN_STATUS_VALUE);
-    await PageFactory.getPage('Home').open();
-    await PageFactory.getPage('Home').Header.userInfoArrow.click();
-    await PageFactory.getPage('Home').Header.userInfoDropMenu.waitToDisplay();
-    await PageFactory.getPage('Home').Header.userInfoDropElements.clickElementByText(constants.LOGOUT_OPTION_TEXT);
-    const isLoggedOut = await PageFactory.getPage('Home').Header.loggedInUserName.waitToNotDisplay();
-    expect(isLoggedOut).toBeTruthy();
-  })
 });

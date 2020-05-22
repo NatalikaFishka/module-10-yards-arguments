@@ -27,7 +27,7 @@ npm run test -- --multi
 npm run test -- --instance 2
 ```
 
-* Use `--set` flag with `header`, `trainings` options to specify test suite to run. All sets run by default.
+* Use `--set` flag with `header`, `footer`, `login_logout` or `trainings` options to specify test suite to run. All sets run by default.
 ```
 npm run test -- --set header
 ```
