@@ -32,6 +32,11 @@ npm run test -- --instance 2
 npm run test -- --set header
 ```
 
+* To run more then one set file specify them after `--set` flag in quotes and separate by space.
+```
+npm run test -- --set "login_logout trainings"
+```
+
 * Chain some options
 ```
 npm run test -- --browser MicrosoftEdge --instances 2
